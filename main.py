@@ -73,7 +73,34 @@ def makes_new_perp_word(board, char, row, col, hor):
             return True
 
         else:
-            return False
+            end_row = row
+            for i in range(0, len(board[0])):
+                if board[row + i][col] is not None:
+                    end_row = row + i
+                else:
+                    break
+
+            start_row = row
+            for i in range(0, len(board[0])):
+                if board[row - i][col] is not None:
+                    start_row = row - i
+                else:
+                    break
+
+            if start_row == end_row:
+                return False
+
+            string = ""
+            for i in range(start_row, end_row + 1):
+                string += board[i][col]
+
+            for word in orij_words:
+                if string == word:
+                    return False
+
+            print("{} is a new word".format(string))
+            # print_board(board)
+            return True
 
     finally:
         board[row][col] = prev_char
